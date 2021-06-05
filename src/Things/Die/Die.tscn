@@ -28,7 +28,7 @@ tracks/0/keys = {
 
 [node name="Die" type="RigidBody2D"]
 gravity_scale = 0.0
-linear_damp = 1.5
+linear_damp = 2.0
 angular_damp = 1.5
 script = ExtResource( 3 )
 

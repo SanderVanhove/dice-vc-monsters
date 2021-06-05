@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Heat_icon.png-966d2ff8803797814557b9008307ae8f.stex"
+path="res://.import/skellyboi.png-ffa830127c4d30de3f444f75c88106da.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Things/Die/Heat_icon.png"
-dest_files=[ "res://.import/Heat_icon.png-966d2ff8803797814557b9008307ae8f.stex" ]
+source_file="res://Things/Enemy/skellyboi.png"
+dest_files=[ "res://.import/skellyboi.png-ffa830127c4d30de3f444f75c88106da.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

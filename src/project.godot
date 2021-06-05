@@ -34,6 +34,9 @@ _global_script_class_icons={
 
 config/name="Dice vs Monsters"
 run/main_scene="res://Screens/Fight/Fight.tscn"
+boot_splash/image="res://splash_screen.png"
+boot_splash/fullsize=false
+boot_splash/bg_color=Color( 0.984314, 0.921569, 0.890196, 1 )
 config/icon="res://icon.png"
 
 [autoload]
@@ -44,7 +47,8 @@ Enums="*res://Autoloads/Enums.gd"
 
 window/size/width=720
 window/size/height=1280
-window/size/test_height=700
+window/size/test_width=1200
+window/size/test_height=675
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 

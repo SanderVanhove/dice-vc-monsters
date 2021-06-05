@@ -8,17 +8,45 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "DiceTray",
+"language": "GDScript",
+"path": "res://Screens/Fight/DiceTray.gd"
+}, {
+"base": "RigidBody2D",
+"class": "Die",
+"language": "GDScript",
+"path": "res://Things/Die/Die.gd"
+}, {
+"base": "CenterContainer",
+"class": "UIDie",
+"language": "GDScript",
+"path": "res://Things/UIDie/UIDie.gd"
+} ]
+_global_script_class_icons={
+"DiceTray": "",
+"Die": "",
+"UIDie": ""
+}
+
 [application]
 
 config/name="Dice vs Monsters"
 run/main_scene="res://Screens/Fight/Fight.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Enums="*res://Autoloads/Enums.gd"
+
 [display]
 
 window/size/width=720
 window/size/height=1280
-window/stretch/aspect="expand"
+window/size/test_height=700
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
 
 [physics]
 

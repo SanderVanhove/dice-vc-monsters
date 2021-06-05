@@ -1,21 +1,64 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Things/Die/Sword_icon.png" type="Texture" id=1]
 [ext_resource path="res://Things/Die/Dice_border.png" type="Texture" id=2]
+[ext_resource path="res://Things/Die/Die.gd" type="Script" id=3]
+[ext_resource path="res://Things/Die/Shield_icon.png" type="Texture" id=4]
+[ext_resource path="res://Things/Die/Heat_icon.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 46.1537, 45.8572 )
 
+[sub_resource type="Animation" id=2]
+resource_name = "Throw"
+length = 1.3
+step = 0.03
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.24, 0.48, 0.66, 0.78, 0.9, 0.96 ),
+"transitions": PoolRealArray( 1, 1, 1, 1.1487, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.3, 1.3 ), Vector2( 1, 1 ), Vector2( 1.1, 1.1 ), Vector2( 1, 1 ), Vector2( 1.05, 1.05 ), Vector2( 1, 1 ) ]
+}
+
 [node name="Die" type="RigidBody2D"]
 gravity_scale = 0.0
+linear_damp = 1.5
+angular_damp = 1.5
+script = ExtResource( 3 )
 
 [node name="Visual" type="Node2D" parent="."]
 
-[node name="Icon" type="Sprite" parent="Visual"]
+[node name="Border" type="TextureRect" parent="Visual"]
+margin_left = -50.0
+margin_top = -50.0
+margin_right = 50.0
+margin_bottom = 50.0
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SwordIcon" type="Sprite" parent="Visual"]
 texture = ExtResource( 1 )
 
-[node name="Border" type="Sprite" parent="Visual"]
-texture = ExtResource( 2 )
+[node name="HealthIcon" type="Sprite" parent="Visual"]
+texture = ExtResource( 5 )
+
+[node name="ShieldIcon" type="Sprite" parent="Visual"]
+texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Throw = SubResource( 2 )
+
+[connection signal="gui_input" from="Visual/Border" to="." method="_on_Border_gui_input"]

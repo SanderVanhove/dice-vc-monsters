@@ -20,6 +20,7 @@ const RANDOM_DEFAULTS: Dictionary = {
 
 onready var _animation_player: AnimationPlayer = $AnimationPlayer
 onready var _border: TextureRect = $Visual/Border
+onready var _roll_audio: RandomStreamPlayer = $RollAudio
 
 onready var _sword_icon: Sprite = $Visual/SwordIcon
 onready var _health_icon: Sprite = $Visual/HealthIcon
@@ -54,6 +55,8 @@ func set_type(new_type: int):
 
 
 func throw(rand: bool = true, velocity: Vector2 = Vector2.ZERO):
+	_roll_audio.play(.2)
+
 	if velocity == Vector2.ZERO:
 		velocity = Vector2(1, 0) * rand_range(THROW_DEFAULTS["min"], THROW_DEFAULTS["max"])
 		var angle: float = get_angle_to(throw_target) + rand_range(-THROW_DEFAULTS["angle_margin"], THROW_DEFAULTS["angle_margin"])

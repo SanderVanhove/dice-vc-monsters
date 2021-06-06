@@ -12,6 +12,8 @@ onready var _tween: Tween = $Tween
 onready var _title: Label = $CenterContainer/NinePatchRect/Title
 onready var _text: Label = $CenterContainer/NinePatchRect/CenterContainer/Text
 onready var _color_rect: ColorRect = $ColorRect
+onready var _open_audio: AudioStreamPlayer = $OpenAudio
+onready var _close_audio: AudioStreamPlayer = $CloseAudio
 
 
 func _ready() -> void:
@@ -25,6 +27,8 @@ func popup():
 	_tween.interpolate_property(self, "modulate:a", 0, 1, .2)
 	_tween.start()
 
+	_open_audio.play()
+
 	_color_rect.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	_color_rect.mouse_filter = Control.MOUSE_FILTER_STOP
 
@@ -32,6 +36,8 @@ func popup():
 
 	_tween.interpolate_property(self, "modulate:a", 1, 0, .2)
 	_tween.start()
+
+	_close_audio.play()
 
 	_color_rect.mouse_default_cursor_shape = Control.CURSOR_ARROW
 	_color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/shield.ogg-59674255851211b8ddcc260963842405.oggstr"
+
+[deps]
+
+source_file="res://Screens/Fight/shield.ogg"
+dest_files=[ "res://.import/shield.ogg-59674255851211b8ddcc260963842405.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

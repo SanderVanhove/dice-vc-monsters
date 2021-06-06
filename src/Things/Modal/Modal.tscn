@@ -1,22 +1,30 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Things/Modal/Modal.gd" type="Script" id=1]
 [ext_resource path="res://Screens/Fight/RubikMonoOne-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Things/Modal/modal_9_patch.png" type="Texture" id=3]
+[ext_resource path="res://Things/Modal/close_modal.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Things/Modal/open_modal.ogg" type="AudioStream" id=5]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 size = 36
 extra_spacing_top = -7
 extra_spacing_space = -2
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 size = 43
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 26
 font_data = ExtResource( 2 )
+
+[sub_resource type="AudioStreamRandomPitch" id=4]
+audio_stream = ExtResource( 5 )
+
+[sub_resource type="AudioStreamRandomPitch" id=5]
+audio_stream = ExtResource( 4 )
 
 [node name="Modal" type="Control"]
 anchor_right = 1.0
@@ -79,7 +87,7 @@ margin_right = 544.0
 margin_bottom = 377.0
 rect_min_size = Vector2( 525, 0 )
 mouse_default_cursor_shape = 2
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
 text = "Description about whatever is happening here bla bal bla"
 autowrap = true
@@ -90,7 +98,7 @@ margin_top = 11.0
 margin_right = 606.0
 margin_bottom = 66.0
 mouse_default_cursor_shape = 2
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
 text = "Title"
 align = 1
@@ -113,5 +121,13 @@ __meta__ = {
 }
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="OpenAudio" type="AudioStreamPlayer" parent="."]
+stream = SubResource( 4 )
+bus = "Sound"
+
+[node name="CloseAudio" type="AudioStreamPlayer" parent="."]
+stream = SubResource( 5 )
+bus = "Sound"
 
 [connection signal="gui_input" from="ColorRect" to="." method="_on_ColorRect_gui_input"]

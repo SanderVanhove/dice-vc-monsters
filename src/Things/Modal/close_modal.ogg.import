@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/close_modal.ogg-3a3d9eedcf9d3320fbd57da7f426ef3f.oggstr"
+
+[deps]
+
+source_file="res://Things/Modal/close_modal.ogg"
+dest_files=[ "res://.import/close_modal.ogg-3a3d9eedcf9d3320fbd57da7f426ef3f.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

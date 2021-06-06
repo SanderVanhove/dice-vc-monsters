@@ -40,6 +40,16 @@ onready var _outcome_tutorial: Modal = $CanvasLayer/Modals/EndOfTurnModal
 onready var _damage_tutorial: Modal = $CanvasLayer/Modals/DamageModal
 onready var _monster_tutorial: Modal = $CanvasLayer/Modals/MonsterModal
 
+onready var _pickup_audio: AudioStreamPlayer = $Audio/PickupAudio
+onready var _sword_audio: AudioStreamPlayer = $Audio/SwordAudio
+onready var _shield_audio: AudioStreamPlayer = $Audio/ShieldAudio
+onready var _hero_pain_audio: RandomStreamPlayer = $Audio/HeroPain
+onready var _monster_attack: AudioStreamPlayer = $Audio/MonsterAttack
+onready var _monster_pain_audio: AudioStreamPlayer = $Audio/MonsterPain
+onready var _impact_audio: AudioStreamPlayer = $Audio/ImpactAudio
+onready var _heal_audio: AudioStreamPlayer = $Audio/HealAudio
+onready var _click_audio: AudioStreamPlayer = $Audio/ClickAudio
+
 var _hero_health: int = HERO_MAX_HEALTH
 
 var _monster_health: int = 10
@@ -102,6 +112,8 @@ func save_die(die: Die):
 
 	die.queue_free()
 
+	_pickup_audio.play()
+
 	if Globals.is_tutorial and is_instance_valid(_unsave_dice_tutorial):
 		yield(_unsave_dice_tutorial.popup(), "completed")
 
@@ -117,6 +129,8 @@ func unsave_die(ui_die: UIDie):
 
 
 func _on_RollButton_pressed() -> void:
+	_click_audio.play()
+
 	yield(throw_all_dice(), "completed")
 
 	if Globals.is_tutorial and is_instance_valid(_end_turn_tutorial):
@@ -139,6 +153,8 @@ func get_outcome() -> Array:
 
 
 func _on_EndTurnButton_pressed() -> void:
+	_click_audio.play()
+
 	_is_end_turn = true
 	_roll_button.disabled = true
 	_end_turn_button.disabled = true
@@ -154,13 +170,16 @@ func _on_EndTurnButton_pressed() -> void:
 
 	### ATTACK MONSTER
 	var hero_attack: int = outcome[0] - enemy_definition.defence
-	# Play monster animation + sound
+	_sword_audio.play()
+
 	if hero_attack > 0:
 		_enemy.play_damage_animation()
 		_monster_health = clamp(_monster_health - hero_attack, 0, enemy_definition.health)
 		_stats_ui.change_monster_health(_monster_health)
 
 		_sword_effect.play(-hero_attack)
+		_monster_pain_audio.play()
+		_impact_audio.play()
 
 		if _monster_health <= 0:
 			_enemy.play_die_animation()
@@ -171,12 +190,14 @@ func _on_EndTurnButton_pressed() -> void:
 			return
 	else:
 		_monster_block_effect.play(0)
+		_shield_audio.play()
 
 	_phase_timer.start()
 	yield(_phase_timer, "timeout")
 
 	### HEAL HERO
 	if outcome[1] > 0:
+		_heal_audio.play()
 		_hero_health = clamp(_hero_health + outcome[1], 0, HERO_MAX_HEALTH)
 		_stats_ui.change_hero_health(_hero_health)
 		_heal_effect.play(outcome[1])
@@ -189,13 +210,16 @@ func _on_EndTurnButton_pressed() -> void:
 	### ATTACK HERO
 	var monster_attack: int = enemy_definition.attack - outcome[2]
 	_enemy.play_attack_animation()
+	_monster_attack.play()
 	if monster_attack > 0:
 		_hero_health = clamp(_hero_health - monster_attack, 0, HERO_MAX_HEALTH)
 		_stats_ui.change_hero_health(_hero_health)
 		_slash_effect.play(-monster_attack)
+		_hero_pain_audio.play(.5)
+		_impact_audio.play()
 	else:
 		_hero_block_effect.play(0)
-	# Play monster animation + sound
+		_shield_audio.play()
 
 	_phase_timer.start()
 	yield(_phase_timer, "timeout")

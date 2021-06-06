@@ -1,10 +1,15 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Things/Die/Sword_icon.png" type="Texture" id=1]
 [ext_resource path="res://Things/Die/Dice_border.png" type="Texture" id=2]
 [ext_resource path="res://Things/Die/Die.gd" type="Script" id=3]
 [ext_resource path="res://Things/Die/Shield_icon.png" type="Texture" id=4]
 [ext_resource path="res://Things/Die/Heat_icon.png" type="Texture" id=5]
+[ext_resource path="res://Things/RandomAudioPlayer/RandomAudioPlayer.gd" type="Script" id=6]
+[ext_resource path="res://Things/Die/roll2.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Things/Die/roll3.ogg" type="AudioStream" id=8]
+[ext_resource path="res://Things/Die/roll1.ogg" type="AudioStream" id=9]
+[ext_resource path="res://Things/Die/roll4.ogg" type="AudioStream" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 46.1537, 45.8572 )
@@ -25,6 +30,22 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 1.3, 1.3 ), Vector2( 1, 1 ), Vector2( 1.1, 1.1 ), Vector2( 1, 1 ), Vector2( 1.05, 1.05 ), Vector2( 1, 1 ) ]
 }
+
+[sub_resource type="AudioStreamRandomPitch" id=3]
+audio_stream = ExtResource( 9 )
+random_pitch = 1.3
+
+[sub_resource type="AudioStreamRandomPitch" id=4]
+audio_stream = ExtResource( 7 )
+random_pitch = 1.3
+
+[sub_resource type="AudioStreamRandomPitch" id=5]
+audio_stream = ExtResource( 8 )
+random_pitch = 1.3
+
+[sub_resource type="AudioStreamRandomPitch" id=6]
+audio_stream = ExtResource( 10 )
+random_pitch = 1.3
 
 [node name="Die" type="RigidBody2D"]
 gravity_scale = 0.0
@@ -60,5 +81,28 @@ shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Throw = SubResource( 2 )
+
+[node name="RollAudio" type="Node2D" parent="."]
+script = ExtResource( 6 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="RollAudio"]
+stream = SubResource( 3 )
+volume_db = 2.0
+bus = "Sound"
+
+[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="RollAudio"]
+stream = SubResource( 4 )
+volume_db = 2.0
+bus = "Sound"
+
+[node name="AudioStreamPlayer2D3" type="AudioStreamPlayer2D" parent="RollAudio"]
+stream = SubResource( 5 )
+volume_db = 2.0
+bus = "Sound"
+
+[node name="AudioStreamPlayer2D4" type="AudioStreamPlayer2D" parent="RollAudio"]
+stream = SubResource( 6 )
+volume_db = 2.0
+bus = "Sound"
 
 [connection signal="gui_input" from="Visual/Border" to="." method="_on_Border_gui_input"]

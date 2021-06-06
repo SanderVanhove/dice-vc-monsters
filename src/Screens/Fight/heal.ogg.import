@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/heal.ogg-f793af13b2b62114e779023f6817aff6.oggstr"
+
+[deps]
+
+source_file="res://Screens/Fight/heal.ogg"
+dest_files=[ "res://.import/heal.ogg-f793af13b2b62114e779023f6817aff6.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

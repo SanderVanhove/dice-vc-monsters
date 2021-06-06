@@ -12,6 +12,8 @@ onready var _animation_player: AnimationPlayer = $AnimationPlayer
 
 func _ready() -> void:
 	load_enemy(enemy_definition)
+	_animation_player.play("rest")
+	_animation_player.queue("idle")
 
 
 func load_enemy(new_enemy_def: EnemyDefinition):
@@ -21,7 +23,13 @@ func load_enemy(new_enemy_def: EnemyDefinition):
 
 func play_damage_animation():
 	_animation_player.play("damage")
+	_animation_player.queue("idle")
 
 
 func play_attack_animation():
 	_animation_player.play("attack")
+	_animation_player.queue("idle")
+
+
+func play_die_animation():
+	_animation_player.play("die")

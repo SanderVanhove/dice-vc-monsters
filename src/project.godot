@@ -20,6 +20,11 @@ _global_script_classes=[ {
 "path": "res://Things/Die/Die.gd"
 }, {
 "base": "Node2D",
+"class": "Effect",
+"language": "GDScript",
+"path": "res://Things/Effect/Effect.gd"
+}, {
+"base": "Node2D",
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://Things/Enemy/Enemy.gd"
@@ -34,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Things/HealthBar/HealthBar.gd"
 }, {
+"base": "Control",
+"class": "Modal",
+"language": "GDScript",
+"path": "res://Things/Modal/Modal.gd"
+}, {
 "base": "VBoxContainer",
 "class": "StatsUI",
 "language": "GDScript",
@@ -47,9 +57,11 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "DiceTray": "",
 "Die": "",
+"Effect": "",
 "Enemy": "",
 "EnemyDefinition": "",
 "HealthBar": "",
+"Modal": "",
 "StatsUI": "",
 "UIDie": ""
 }
@@ -66,6 +78,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Enums="*res://Autoloads/Enums.gd"
+Globals="*res://Autoloads/Globals.gd"
 
 [display]
 

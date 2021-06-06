@@ -11,7 +11,9 @@ func _ready() -> void:
 		die.throw_target = _center.position
 
 
-func add_die(die: Die):
+func add_die(die: Die, should_be_throw: bool = true):
 	_dice.add_child(die)
-	die.throw(false)
 	die.throw_target = _center.position
+
+	if should_be_throw:
+		die.throw(false)

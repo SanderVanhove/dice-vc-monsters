@@ -1,0 +1,117 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Things/Modal/Modal.gd" type="Script" id=1]
+[ext_resource path="res://Screens/Fight/RubikMonoOne-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Things/Modal/modal_9_patch.png" type="Texture" id=3]
+
+[sub_resource type="DynamicFont" id=2]
+size = 36
+extra_spacing_top = -7
+extra_spacing_space = -2
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=1]
+size = 43
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 26
+font_data = ExtResource( 2 )
+
+[node name="Modal" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0.654902, 0.654902, 0.654902, 0.52549 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+mouse_default_cursor_shape = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CenterContainer"]
+margin_left = 35.0
+margin_top = 340.0
+margin_right = 685.0
+margin_bottom = 940.0
+rect_min_size = Vector2( 650, 600 )
+mouse_default_cursor_shape = 2
+texture = ExtResource( 3 )
+patch_margin_left = 44
+patch_margin_top = 44
+patch_margin_right = 44
+patch_margin_bottom = 24
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="CenterContainer/NinePatchRect"]
+margin_left = 42.0
+margin_top = 6.0
+margin_right = 605.0
+margin_bottom = 596.0
+mouse_filter = 2
+mouse_default_cursor_shape = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="Label" parent="CenterContainer/NinePatchRect/CenterContainer"]
+margin_left = 19.0
+margin_top = 212.0
+margin_right = 544.0
+margin_bottom = 377.0
+rect_min_size = Vector2( 525, 0 )
+mouse_default_cursor_shape = 2
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
+text = "Description about whatever is happening here bla bal bla"
+autowrap = true
+
+[node name="Title" type="Label" parent="CenterContainer/NinePatchRect"]
+margin_left = 43.0
+margin_top = 11.0
+margin_right = 606.0
+margin_bottom = 66.0
+mouse_default_cursor_shape = 2
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
+text = "Title"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CenterContainer/NinePatchRect"]
+margin_left = 44.0
+margin_top = 555.0
+margin_right = 606.0
+margin_bottom = 588.0
+mouse_default_cursor_shape = 2
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.533333, 0.752941, 0.439216, 1 )
+text = "Tap/click"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="gui_input" from="ColorRect" to="." method="_on_ColorRect_gui_input"]

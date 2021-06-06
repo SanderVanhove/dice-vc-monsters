@@ -10,3 +10,7 @@ health = 8
 defence = 0
 attack = 1
 sprite = ExtResource( 2 )
+flavor_text = "Wandering through the cave's halls, a Skully Boy managed to sneak up behind you, watch out!"
+win_text = "With your last blow the Skully Boy falls bone for bone apart on the damp floor.
+
+Time to face that dragon!"

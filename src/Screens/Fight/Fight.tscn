@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Things/Die/Die.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Screens/Fight/Fight.gd" type="Script" id=2]
@@ -10,12 +10,18 @@
 [ext_resource path="res://Screens/Fight/ButtonBackgroundDisabled.tres" type="StyleBox" id=8]
 [ext_resource path="res://Things/Enemy/Enemy.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Things/Enemy/skully_boy.tres" type="Resource" id=10]
+[ext_resource path="res://Things/Effect/Effect.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Things/Effect/slash_effect.png" type="Texture" id=12]
+[ext_resource path="res://Things/Effect/sword_effect.png" type="Texture" id=13]
+[ext_resource path="res://Things/Effect/hero_block_effect.png" type="Texture" id=14]
+[ext_resource path="res://Things/Effect/monster_block_effect.png" type="Texture" id=15]
+[ext_resource path="res://Things/Modal/Modal.tscn" type="PackedScene" id=16]
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=1]
 size = 34
 font_data = ExtResource( 5 )
 
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxFlat" id=2]
 content_margin_left = 14.0
 content_margin_right = 14.0
 content_margin_top = 0.0
@@ -27,7 +33,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=3]
 content_margin_left = 14.0
 content_margin_right = 14.0
 content_margin_top = 8.0
@@ -39,22 +45,22 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 anti_aliasing = false
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=4]
 size = 34
 extra_spacing_space = -13
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=5]
 size = 58
 font_data = ExtResource( 5 )
 
-[sub_resource type="InputEventKey" id=9]
+[sub_resource type="InputEventKey" id=6]
 scancode = 16777221
 
-[sub_resource type="ShortCut" id=10]
-shortcut = SubResource( 9 )
+[sub_resource type="ShortCut" id=7]
+shortcut = SubResource( 6 )
 
-[sub_resource type="Shader" id=11]
+[sub_resource type="Shader" id=8]
 code = "shader_type canvas_item;
 
 uniform float size_x = 0.008;
@@ -67,12 +73,12 @@ void fragment() {
 	COLOR.rgb = textureLod(SCREEN_TEXTURE, uv, 0.0).rgb;
 }"
 
-[sub_resource type="ShaderMaterial" id=12]
-shader = SubResource( 11 )
+[sub_resource type="ShaderMaterial" id=9]
+shader = SubResource( 8 )
 shader_param/size_x = 0.003
 shader_param/size_y = 0.003
 
-[sub_resource type="Shader" id=13]
+[sub_resource type="Shader" id=10]
 code = "//---CRT Shader---
 shader_type canvas_item;
 
@@ -113,14 +119,14 @@ void fragment()
 	COLOR = vec4(r, g, b, 1.0) * scan_line;
 }"
 
-[sub_resource type="ShaderMaterial" id=14]
-shader = SubResource( 13 )
+[sub_resource type="ShaderMaterial" id=11]
+shader = SubResource( 10 )
 shader_param/scanline_count = 90.0
 
-[sub_resource type="RectangleShape2D" id=15]
+[sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 383.561, 10 )
 
-[sub_resource type="RectangleShape2D" id=16]
+[sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 20.3438, 279.179 )
 
 [node name="Fight" type="Node2D"]
@@ -137,6 +143,9 @@ __meta__ = {
 }
 
 [node name="Stats" parent="CanvasLayer/UI" instance=ExtResource( 7 )]
+margin_top = 240.0
+margin_bottom = 513.0
+custom_constants/separation = 28
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI"]
 margin_left = 10.5137
@@ -166,7 +175,7 @@ margin_bottom = 43.0
 [node name="ThrowLabel" type="Label" parent="CanvasLayer/UI/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer2"]
 margin_right = 319.0
 margin_bottom = 43.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
 text = "Throws: 1/5"
 
@@ -196,11 +205,11 @@ margin_right = 247.0
 margin_bottom = 49.0
 focus_mode = 0
 mouse_default_cursor_shape = 2
-custom_styles/hover = SubResource( 4 )
-custom_styles/pressed = SubResource( 5 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
 custom_styles/disabled = ExtResource( 8 )
 custom_styles/normal = ExtResource( 6 )
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color_disabled = Color( 0.0313726, 0.0941176, 0.12549, 1 )
 custom_colors/font_color = Color( 0.878431, 0.972549, 0.815686, 1 )
 custom_colors/font_color_hover = Color( 0.878431, 0.972549, 0.815686, 1 )
@@ -216,21 +225,74 @@ margin_top = 73.0
 margin_right = 247.0
 margin_bottom = 152.0
 mouse_default_cursor_shape = 2
-custom_styles/hover = SubResource( 4 )
-custom_styles/pressed = SubResource( 5 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
 custom_styles/disabled = ExtResource( 8 )
 custom_styles/normal = ExtResource( 6 )
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color_disabled = Color( 0.0313726, 0.0941176, 0.12549, 1 )
 custom_colors/font_color = Color( 0.878431, 0.972549, 0.815686, 1 )
 custom_colors/font_color_hover = Color( 0.878431, 0.972549, 0.815686, 1 )
 custom_colors/font_color_pressed = Color( 0.878431, 0.972549, 0.815686, 1 )
 shortcut_in_tooltip = false
-shortcut = SubResource( 10 )
+shortcut = SubResource( 7 )
 text = "ROLL"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Modals" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IntroModal" parent="CanvasLayer/Modals" instance=ExtResource( 16 )]
+
+[node name="WinModal" parent="CanvasLayer/Modals" instance=ExtResource( 16 )]
+title = "Success!"
+
+[node name="RollTutorial" parent="CanvasLayer/Modals" instance=ExtResource( 16 )]
+title = "Rolling dice"
+text = "Roll dice to defeat the monster.
+
+Every turn you can roll up to 3 times by pressing the \"Roll\"-button."
+
+[node name="ClickOnDiceModal" parent="CanvasLayer/Modals" instance=ExtResource( 16 )]
+title = "Save Dice"
+text = "You can save dice by clicking on them, these will not be re-rolled."
+
+[node name="EndTurnModal" parent="CanvasLayer/Modals" instance=ExtResource( 16 )]
+title = "End of turn"
+text = "If you are satisfied with your dice, click \"end turn\" to see the outcome.
+
+You can still roll 1 more time this turn."
+
+[node name="UnsaveModal" parent="CanvasLayer/Modals" instance=ExtResource( 16 )]
+title = "Unsave dice"
+text = "After saving a die, you can put it back into play.
+
+Just click on it again on the bottom of the screen."
+
+[node name="EndOfTurnModal" parent="CanvasLayer/Modals" instance=ExtResource( 16 )]
+title = "Outcome"
+text = "At the end of the turn all your dice will be used to battle the monster."
+
+[node name="DamageModal" parent="CanvasLayer/Modals" instance=ExtResource( 16 )]
+title = "Calculations #1"
+text = "The outcome is calculated like this:
+
+Damage to monster = # sword dice - monster's defence
+
+Healing = # heart dice."
+
+[node name="MonsterModal" parent="CanvasLayer/Modals" instance=ExtResource( 16 )]
+title = "Calculations #2"
+text = "Of course the monster will attack back:
+
+Damage from monster = monster's attack - # shield dice."
 
 [node name="Shaders" type="Control" parent="CanvasLayer"]
 visible = false
@@ -248,7 +310,7 @@ copy_mode = 2
 rect = Rect2( 0, 0, 200, 200 )
 
 [node name="PixelShader" type="ColorRect" parent="CanvasLayer/Shaders/BackBufferCopy2"]
-material = SubResource( 12 )
+material = SubResource( 9 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -69.0
@@ -267,7 +329,7 @@ copy_mode = 2
 rect = Rect2( 0, 0, 200, 200 )
 
 [node name="VCRShader" type="ColorRect" parent="CanvasLayer/Shaders/BackBufferCopy"]
-material = SubResource( 14 )
+material = SubResource( 11 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -9.0
@@ -307,27 +369,67 @@ position = Vector2( 8.28638, -205.491 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DiceTray/Walls"]
 position = Vector2( 363.335, 463.455 )
-shape = SubResource( 15 )
+shape = SubResource( 12 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="DiceTray/Walls"]
 position = Vector2( 349.081, 999.812 )
-shape = SubResource( 15 )
+shape = SubResource( 12 )
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="DiceTray/Walls"]
 position = Vector2( 5.24902, 735.197 )
-shape = SubResource( 16 )
+shape = SubResource( 13 )
 
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="DiceTray/Walls"]
 position = Vector2( 716.295, 735.197 )
-shape = SubResource( 16 )
+shape = SubResource( 13 )
 
 [node name="Center" type="Node2D" parent="DiceTray"]
 position = Vector2( 358.887, 735.882 )
 
 [node name="PhaseTimer" type="Timer" parent="."]
+wait_time = 0.7
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="EndTimer" type="Timer" parent="."]
+wait_time = 0.7
 
 [node name="Enemy" parent="." instance=ExtResource( 9 )]
-position = Vector2( 363.385, 119.199 )
+position = Vector2( 363.385, 123.199 )
+
+[node name="Effects" type="Node2D" parent="."]
+
+[node name="SlashEffect" parent="Effects" instance=ExtResource( 11 )]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 348.38, 773.199 )
+distance = Vector2( 10, 50 )
+texture = ExtResource( 12 )
+
+[node name="HealEffect" parent="Effects" instance=ExtResource( 11 )]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 354.38, 779.199 )
+distance = Vector2( 0, -50 )
+
+[node name="SwordEffect" parent="Effects" instance=ExtResource( 11 )]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 360.38, 119.199 )
+distance = Vector2( 50, -50 )
+texture = ExtResource( 13 )
+
+[node name="MonsterBlockEffect" parent="Effects" instance=ExtResource( 11 )]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 360.38, 113.32 )
+distance = Vector2( 0, -10 )
+texture = ExtResource( 15 )
+
+[node name="HeroBlockEffect" parent="Effects" instance=ExtResource( 11 )]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 348.38, 809.199 )
+distance = Vector2( 0, -10 )
+texture = ExtResource( 14 )
 
 [connection signal="pressed" from="CanvasLayer/UI/HBoxContainer/VBoxContainer/EndTurnButton" to="." method="_on_EndTurnButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/UI/HBoxContainer/VBoxContainer/RollButton" to="." method="_on_RollButton_pressed"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]

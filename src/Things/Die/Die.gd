@@ -2,6 +2,7 @@ extends RigidBody2D
 class_name Die
 
 signal clicked(Die)
+signal throw_done
 
 
 const THROW_DEFAULTS: Dictionary = {
@@ -79,6 +80,8 @@ func throw(rand: bool = true, velocity: Vector2 = Vector2.ZERO):
 	_is_throwing = false
 
 	_border.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+
+	emit_signal("throw_done")
 
 
 func _on_Border_gui_input(event: InputEvent) -> void:

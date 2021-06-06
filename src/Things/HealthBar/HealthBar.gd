@@ -27,7 +27,7 @@ func set_max_value(new_max_value: int):
 func change_value(value: int):
 	var current_value = _progress_bar.value
 
-	_tween.interpolate_property(_progress_bar, "value", current_value, value, CHANGE_TIME)
+	_tween.interpolate_property(_progress_bar, "value", current_value, value, CHANGE_TIME, Tween.TRANS_BACK, Tween.EASE_OUT)
 	_tween.start()
 
 	var label_value = _progress_bar.value

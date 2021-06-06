@@ -13,7 +13,7 @@ sprite = ExtResource( 2 )
 flavor_text = "It gets warmer as you approach the Derpy Dragon's den.
 
 This is it, the final battle!"
-win_text = "You can't believe it, you killed the dragon. Now that prince(s) must have eyes for you!
+win_text = "You can't believe it, you killed the dragon! Now that prince(ss) must have eyes for you!
 
 You are a true hero!"
 lose_text = "In a moment of confusion the derpy dragon manages to swoop you up using one of his massive paws and swings you right into his mouth.

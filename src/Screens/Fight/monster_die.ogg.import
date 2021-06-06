@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/monster_die.ogg-7846e32058593a9994320f7f12e8ed34.oggstr"
+
+[deps]
+
+source_file="res://Screens/Fight/monster_die.ogg"
+dest_files=[ "res://.import/monster_die.ogg-7846e32058593a9994320f7f12e8ed34.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

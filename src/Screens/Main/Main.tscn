@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Screens/Main/Main.gd" type="Script" id=1]
 [ext_resource path="res://Screens/LevelSelect/LevelSelect.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Screens/Main/wind.ogg" type="AudioStream" id=3]
 
-[sub_resource type="Shader" id=8]
+[sub_resource type="Shader" id=5]
 code = "shader_type canvas_item;
 
 uniform float size_x = 0.008;
@@ -16,12 +17,12 @@ void fragment() {
 	COLOR.rgb = textureLod(SCREEN_TEXTURE, uv, 0.0).rgb;
 }"
 
-[sub_resource type="ShaderMaterial" id=9]
-shader = SubResource( 8 )
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 5 )
 shader_param/size_x = 0.003
 shader_param/size_y = 0.003
 
-[sub_resource type="Shader" id=10]
+[sub_resource type="Shader" id=3]
 code = "//---CRT Shader---
 shader_type canvas_item;
 
@@ -62,8 +63,8 @@ void fragment()
 	COLOR = vec4(r, g, b, 1.0) * scan_line;
 }"
 
-[sub_resource type="ShaderMaterial" id=11]
-shader = SubResource( 10 )
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
 shader_param/scanline_count = 90.0
 
 [node name="Main" type="Node2D"]
@@ -93,7 +94,7 @@ copy_mode = 2
 rect = Rect2( 0, 0, 200, 200 )
 
 [node name="PixelShader" type="ColorRect" parent="CanvasLayer/Shaders/BackBufferCopy2"]
-material = SubResource( 9 )
+material = SubResource( 2 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -69.0
@@ -112,7 +113,7 @@ copy_mode = 2
 rect = Rect2( 0, 0, 200, 200 )
 
 [node name="VCRShader" type="ColorRect" parent="CanvasLayer/Shaders/BackBufferCopy"]
-material = SubResource( 11 )
+material = SubResource( 4 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -2.0
@@ -123,5 +124,10 @@ __meta__ = {
 }
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="wind" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -30.0
+autoplay = true
 
 [connection signal="enemy_selected" from="SpawnNode/CanvasLayer/LevelSelect" to="." method="_on_LevelSelect_enemy_selected"]

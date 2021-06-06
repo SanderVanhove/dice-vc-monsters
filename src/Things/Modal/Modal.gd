@@ -2,6 +2,7 @@ extends Control
 class_name Modal
 
 signal close
+signal open
 
 
 export(String) var title: String
@@ -28,6 +29,8 @@ func popup():
 	_tween.start()
 
 	_open_audio.play()
+
+	emit_signal("open")
 
 	_color_rect.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	_color_rect.mouse_filter = Control.MOUSE_FILTER_STOP

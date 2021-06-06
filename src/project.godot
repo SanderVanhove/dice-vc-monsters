@@ -87,7 +87,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Dice vs Monsters"
-run/main_scene="res://Screens/Main/Main.tscn"
+run/main_scene="res://Screens/Title/Title.tscn"
 boot_splash/image="res://splash_screen.png"
 boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0.984314, 0.921569, 0.890196, 1 )

@@ -1,7 +1,7 @@
 extends Node2D
 
 
-const TRANSITION_DURATION: float = .5
+const TRANSITION_DURATION: float = .3
 
 
 var LevelSelectClass = preload("res://Screens/LevelSelect/LevelSelect.tscn")
@@ -27,7 +27,10 @@ func _on_LevelSelect_enemy_selected(enemy: EnemyDefinition, level: int) -> void:
 	_fight.connect("monster_died", self, "player_won")
 	_fight.modulate.a = 0
 	if level == 1: _fight.is_tutorial = true
-	if level == 3: _fight._add_extra_die = true
+	if level == 3:
+		_fight._add_extra_die = true
+		_fight._show_end_modal = true
+
 
 	_spawn_node.add_child(_fight)
 	_tween.interpolate_property(_level_select, "modulate:a", 1, 0, TRANSITION_DURATION)

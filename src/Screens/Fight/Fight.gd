@@ -42,6 +42,7 @@ onready var _unsave_dice_tutorial: Modal = $CanvasLayer/Modals/UnsaveModal
 onready var _outcome_tutorial: Modal = $CanvasLayer/Modals/EndOfTurnModal
 onready var _damage_tutorial: Modal = $CanvasLayer/Modals/DamageModal
 onready var _monster_tutorial: Modal = $CanvasLayer/Modals/MonsterModal
+onready var _end_modal: Modal = $CanvasLayer/Modals/EndModal
 
 onready var _pickup_audio: AudioStreamPlayer = $Audio/PickupAudio
 onready var _sword_audio: AudioStreamPlayer = $Audio/SwordAudio
@@ -53,6 +54,8 @@ onready var _impact_audio: AudioStreamPlayer = $Audio/ImpactAudio
 onready var _heal_audio: AudioStreamPlayer = $Audio/HealAudio
 onready var _click_audio: AudioStreamPlayer = $Audio/ClickAudio
 onready var _hero_die_audio: AudioStreamPlayer = $Audio/HeroDieAudio
+onready var _win_audio: AudioStreamPlayer = $Audio/WinAudio
+onready var _monster_die_audio: AudioStreamPlayer = $Audio/MonsterDieAudio
 
 var _hero_health: int = HERO_MAX_HEALTH
 
@@ -61,6 +64,7 @@ var _monster_health: int = 10
 var _throw_number: int = 0
 var _is_end_turn: bool = false
 var _add_extra_die: bool = false
+var _show_end_modal: bool = false
 
 func _ready() -> void:
 	randomize()
@@ -191,16 +195,21 @@ func _on_EndTurnButton_pressed() -> void:
 			_stats_ui.change_monster_health(_monster_health)
 
 			_sword_effect.play(-hero_attack)
-			_monster_pain_audio.play()
 			_impact_audio.play()
 
 			if _monster_health <= 0:
 				_enemy.play_die_animation()
 				_end_timer.start()
+				_win_audio.play()
+				_monster_die_audio.play()
 				yield(_end_timer, "timeout")
 				yield(_win_modal.popup(), "completed")
+				if _show_end_modal:
+					yield(_end_modal.popup(), "completed")
 				emit_signal("monster_died")
 				return
+			else:
+				_monster_pain_audio.play()
 		else:
 			_monster_block_effect.play(0)
 			_shield_audio.play()

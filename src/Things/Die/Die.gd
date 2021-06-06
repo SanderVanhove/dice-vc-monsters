@@ -5,8 +5,8 @@ signal clicked(Die)
 
 
 const THROW_DEFAULTS: Dictionary = {
-	"min": 1000,
-	"max": 2000,
+	"min": 1500,
+	"max": 2500,
 	"angle_margin": 1.5,
 	"torque_margin": 5
 }

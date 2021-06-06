@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Things/Die/Die.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Screens/Fight/Fight.gd" type="Script" id=2]
@@ -6,27 +6,16 @@
 [ext_resource path="res://Things/Die/Dice_tray.png" type="Texture" id=4]
 [ext_resource path="res://Screens/Fight/RubikMonoOne-Regular.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Screens/Fight/ButtonBackground.tres" type="StyleBox" id=6]
-[ext_resource path="res://Things/HealthBar/HealthBar.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Things/Die/Sword_icon.png" type="Texture" id=8]
-[ext_resource path="res://Things/Die/Shield_icon.png" type="Texture" id=9]
-[ext_resource path="res://Things/Die/Heat_icon.png" type="Texture" id=10]
-[ext_resource path="res://Things/Enemy/skellyboi.png" type="Texture" id=11]
+[ext_resource path="res://Things/StatsUI/StatsUI.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Screens/Fight/ButtonBackgroundDisabled.tres" type="StyleBox" id=8]
+[ext_resource path="res://Things/Enemy/Enemy.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Things/Enemy/skully_boy.tres" type="Resource" id=10]
 
-[sub_resource type="DynamicFont" id=17]
-size = 42
-extra_spacing_char = -3
-extra_spacing_space = -4
-font_data = ExtResource( 5 )
-
-[sub_resource type="DynamicFont" id=16]
-size = 49
-font_data = ExtResource( 5 )
-
-[sub_resource type="DynamicFont" id=14]
+[sub_resource type="DynamicFont" id=3]
 size = 34
 font_data = ExtResource( 5 )
 
-[sub_resource type="StyleBoxFlat" id=9]
+[sub_resource type="StyleBoxFlat" id=4]
 content_margin_left = 14.0
 content_margin_right = 14.0
 content_margin_top = 0.0
@@ -38,7 +27,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id=10]
+[sub_resource type="StyleBoxFlat" id=5]
 content_margin_left = 14.0
 content_margin_right = 14.0
 content_margin_top = 8.0
@@ -50,34 +39,22 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 anti_aliasing = false
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=6]
 size = 34
 extra_spacing_space = -13
 font_data = ExtResource( 5 )
-
-[sub_resource type="StyleBoxFlat" id=15]
-content_margin_left = 14.0
-content_margin_right = 14.0
-content_margin_top = 3.0
-content_margin_bottom = 3.0
-bg_color = Color( 0.203922, 0.407843, 0.337255, 1 )
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-anti_aliasing = false
 
 [sub_resource type="DynamicFont" id=8]
 size = 58
 font_data = ExtResource( 5 )
 
-[sub_resource type="InputEventKey" id=12]
+[sub_resource type="InputEventKey" id=9]
 scancode = 16777221
 
-[sub_resource type="ShortCut" id=13]
-shortcut = SubResource( 12 )
+[sub_resource type="ShortCut" id=10]
+shortcut = SubResource( 9 )
 
-[sub_resource type="Shader" id=3]
+[sub_resource type="Shader" id=11]
 code = "shader_type canvas_item;
 
 uniform float size_x = 0.008;
@@ -90,12 +67,12 @@ void fragment() {
 	COLOR.rgb = textureLod(SCREEN_TEXTURE, uv, 0.0).rgb;
 }"
 
-[sub_resource type="ShaderMaterial" id=4]
-shader = SubResource( 3 )
+[sub_resource type="ShaderMaterial" id=12]
+shader = SubResource( 11 )
 shader_param/size_x = 0.003
 shader_param/size_y = 0.003
 
-[sub_resource type="Shader" id=1]
+[sub_resource type="Shader" id=13]
 code = "//---CRT Shader---
 shader_type canvas_item;
 
@@ -136,18 +113,19 @@ void fragment()
 	COLOR = vec4(r, g, b, 1.0) * scan_line;
 }"
 
-[sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
+[sub_resource type="ShaderMaterial" id=14]
+shader = SubResource( 13 )
 shader_param/scanline_count = 90.0
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=15]
 extents = Vector2( 383.561, 10 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=16]
 extents = Vector2( 20.3438, 279.179 )
 
 [node name="Fight" type="Node2D"]
 script = ExtResource( 2 )
+enemy_definition = ExtResource( 10 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -158,157 +136,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Stats" type="VBoxContainer" parent="CanvasLayer/UI"]
-margin_left = 12.0
-margin_top = 229.0
-margin_right = 706.0
-margin_bottom = 502.0
-custom_constants/separation = 35
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Monster" type="VBoxContainer" parent="CanvasLayer/UI/Stats"]
-margin_right = 694.0
-margin_bottom = 118.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MonsterName" type="Label" parent="CanvasLayer/UI/Stats/Monster"]
-margin_right = 694.0
-margin_bottom = 53.0
-custom_fonts/font = SubResource( 17 )
-custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
-text = "Skelly boy"
-align = 1
-valign = 1
-
-[node name="MonsterStats" type="HBoxContainer" parent="CanvasLayer/UI/Stats/Monster"]
-margin_top = 57.0
-margin_right = 694.0
-margin_bottom = 118.0
-custom_constants/separation = 31
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/Stats/Monster/MonsterStats"]
-margin_right = 420.0
-margin_bottom = 61.0
-custom_constants/separation = 10
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UI/Stats/Monster/MonsterStats/HBoxContainer"]
-margin_right = 60.0
-margin_bottom = 61.0
-texture = ExtResource( 10 )
-
-[node name="HealthBar" parent="CanvasLayer/UI/Stats/Monster/MonsterStats/HBoxContainer" instance=ExtResource( 7 )]
-margin_left = 70.0
-margin_right = 420.0
-margin_bottom = 61.0
-
-[node name="ProgressBar" parent="CanvasLayer/UI/Stats/Monster/MonsterStats/HBoxContainer/HealthBar" index="0"]
-margin_top = 5.0
-margin_right = 350.0
-margin_bottom = 55.0
-rect_min_size = Vector2( 350, 50 )
-
-[node name="Label" parent="CanvasLayer/UI/Stats/Monster/MonsterStats/HBoxContainer/HealthBar" index="1"]
-margin_left = 66.0
-margin_top = 7.0
-margin_right = 283.0
-margin_bottom = 53.0
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/UI/Stats/Monster/MonsterStats"]
-margin_left = 451.0
-margin_right = 557.0
-margin_bottom = 61.0
-
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/UI/Stats/Monster/MonsterStats/HBoxContainer2"]
-margin_right = 60.0
-margin_bottom = 61.0
-texture = ExtResource( 9 )
-
-[node name="MonsterDefence" type="Label" parent="CanvasLayer/UI/Stats/Monster/MonsterStats/HBoxContainer2"]
-margin_left = 64.0
-margin_right = 106.0
-margin_bottom = 61.0
-custom_fonts/font = SubResource( 16 )
-custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
-text = "5"
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/UI/Stats/Monster/MonsterStats"]
-margin_left = 588.0
-margin_right = 694.0
-margin_bottom = 61.0
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UI/Stats/Monster/MonsterStats/HBoxContainer3"]
-margin_right = 60.0
-margin_bottom = 61.0
-texture = ExtResource( 8 )
-
-[node name="MonsterAttack" type="Label" parent="CanvasLayer/UI/Stats/Monster/MonsterStats/HBoxContainer3"]
-margin_left = 64.0
-margin_right = 106.0
-margin_bottom = 61.0
-custom_fonts/font = SubResource( 16 )
-custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
-text = "5"
-
-[node name="Hero" type="VBoxContainer" parent="CanvasLayer/UI/Stats"]
-margin_top = 153.0
-margin_right = 694.0
-margin_bottom = 270.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HeroName" type="Label" parent="CanvasLayer/UI/Stats/Hero"]
-margin_right = 694.0
-margin_bottom = 53.0
-custom_fonts/font = SubResource( 17 )
-custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
-text = "Hero (you)"
-align = 1
-valign = 1
-
-[node name="MonsterStats" type="HBoxContainer" parent="CanvasLayer/UI/Stats/Hero"]
-margin_top = 57.0
-margin_right = 694.0
-margin_bottom = 117.0
-custom_constants/separation = 31
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/Stats/Hero/MonsterStats"]
-margin_right = 680.0
-margin_bottom = 60.0
-custom_constants/separation = 10
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UI/Stats/Hero/MonsterStats/HBoxContainer"]
-margin_right = 60.0
-margin_bottom = 60.0
-texture = ExtResource( 10 )
-
-[node name="HealthBar" parent="CanvasLayer/UI/Stats/Hero/MonsterStats/HBoxContainer" instance=ExtResource( 7 )]
-margin_left = 70.0
-margin_right = 680.0
-margin_bottom = 60.0
-max_value = 20
-
-[node name="ProgressBar" parent="CanvasLayer/UI/Stats/Hero/MonsterStats/HBoxContainer/HealthBar" index="0"]
-margin_top = 5.0
-margin_right = 610.0
-margin_bottom = 55.0
-rect_min_size = Vector2( 610, 50 )
-
-[node name="Label" parent="CanvasLayer/UI/Stats/Hero/MonsterStats/HBoxContainer/HealthBar" index="1"]
-margin_left = 196.0
-margin_top = 7.0
-margin_right = 413.0
-margin_bottom = 53.0
+[node name="Stats" parent="CanvasLayer/UI" instance=ExtResource( 7 )]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI"]
 margin_left = 10.5137
@@ -338,7 +166,7 @@ margin_bottom = 43.0
 [node name="ThrowLabel" type="Label" parent="CanvasLayer/UI/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer2"]
 margin_right = 319.0
 margin_bottom = 43.0
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
 text = "Throws: 1/5"
 
@@ -368,10 +196,12 @@ margin_right = 247.0
 margin_bottom = 49.0
 focus_mode = 0
 mouse_default_cursor_shape = 2
-custom_styles/hover = SubResource( 9 )
-custom_styles/pressed = SubResource( 10 )
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/disabled = ExtResource( 8 )
 custom_styles/normal = ExtResource( 6 )
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color_disabled = Color( 0.0313726, 0.0941176, 0.12549, 1 )
 custom_colors/font_color = Color( 0.878431, 0.972549, 0.815686, 1 )
 custom_colors/font_color_hover = Color( 0.878431, 0.972549, 0.815686, 1 )
 custom_colors/font_color_pressed = Color( 0.878431, 0.972549, 0.815686, 1 )
@@ -386,9 +216,9 @@ margin_top = 73.0
 margin_right = 247.0
 margin_bottom = 152.0
 mouse_default_cursor_shape = 2
-custom_styles/hover = SubResource( 9 )
-custom_styles/pressed = SubResource( 10 )
-custom_styles/disabled = SubResource( 15 )
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/disabled = ExtResource( 8 )
 custom_styles/normal = ExtResource( 6 )
 custom_fonts/font = SubResource( 8 )
 custom_colors/font_color_disabled = Color( 0.0313726, 0.0941176, 0.12549, 1 )
@@ -396,7 +226,7 @@ custom_colors/font_color = Color( 0.878431, 0.972549, 0.815686, 1 )
 custom_colors/font_color_hover = Color( 0.878431, 0.972549, 0.815686, 1 )
 custom_colors/font_color_pressed = Color( 0.878431, 0.972549, 0.815686, 1 )
 shortcut_in_tooltip = false
-shortcut = SubResource( 13 )
+shortcut = SubResource( 10 )
 text = "ROLL"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -418,7 +248,7 @@ copy_mode = 2
 rect = Rect2( 0, 0, 200, 200 )
 
 [node name="PixelShader" type="ColorRect" parent="CanvasLayer/Shaders/BackBufferCopy2"]
-material = SubResource( 4 )
+material = SubResource( 12 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -69.0
@@ -437,7 +267,7 @@ copy_mode = 2
 rect = Rect2( 0, 0, 200, 200 )
 
 [node name="VCRShader" type="ColorRect" parent="CanvasLayer/Shaders/BackBufferCopy"]
-material = SubResource( 2 )
+material = SubResource( 14 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -9.0
@@ -477,30 +307,27 @@ position = Vector2( 8.28638, -205.491 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DiceTray/Walls"]
 position = Vector2( 363.335, 463.455 )
-shape = SubResource( 5 )
+shape = SubResource( 15 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="DiceTray/Walls"]
 position = Vector2( 349.081, 999.812 )
-shape = SubResource( 5 )
+shape = SubResource( 15 )
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="DiceTray/Walls"]
 position = Vector2( 5.24902, 735.197 )
-shape = SubResource( 6 )
+shape = SubResource( 16 )
 
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="DiceTray/Walls"]
 position = Vector2( 716.295, 735.197 )
-shape = SubResource( 6 )
+shape = SubResource( 16 )
 
 [node name="Center" type="Node2D" parent="DiceTray"]
 position = Vector2( 358.887, 735.882 )
 
-[node name="skellyboi" type="Sprite" parent="."]
-position = Vector2( 365.839, 120.463 )
-scale = Vector2( 0.638282, 0.638282 )
-texture = ExtResource( 11 )
+[node name="PhaseTimer" type="Timer" parent="."]
+
+[node name="Enemy" parent="." instance=ExtResource( 9 )]
+position = Vector2( 363.385, 119.199 )
 
 [connection signal="pressed" from="CanvasLayer/UI/HBoxContainer/VBoxContainer/EndTurnButton" to="." method="_on_EndTurnButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/UI/HBoxContainer/VBoxContainer/RollButton" to="." method="_on_RollButton_pressed"]
-
-[editable path="CanvasLayer/UI/Stats/Monster/MonsterStats/HBoxContainer/HealthBar"]
-[editable path="CanvasLayer/UI/Stats/Hero/MonsterStats/HBoxContainer/HealthBar"]

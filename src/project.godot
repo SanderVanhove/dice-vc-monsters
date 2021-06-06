@@ -19,6 +19,26 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Things/Die/Die.gd"
 }, {
+"base": "Node2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://Things/Enemy/Enemy.gd"
+}, {
+"base": "Resource",
+"class": "EnemyDefinition",
+"language": "GDScript",
+"path": "res://Things/Enemy/EnemyDefinition.gd"
+}, {
+"base": "CenterContainer",
+"class": "HealthBar",
+"language": "GDScript",
+"path": "res://Things/HealthBar/HealthBar.gd"
+}, {
+"base": "VBoxContainer",
+"class": "StatsUI",
+"language": "GDScript",
+"path": "res://Things/StatsUI/StatsUI.gd"
+}, {
 "base": "CenterContainer",
 "class": "UIDie",
 "language": "GDScript",
@@ -27,6 +47,10 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "DiceTray": "",
 "Die": "",
+"Enemy": "",
+"EnemyDefinition": "",
+"HealthBar": "",
+"StatsUI": "",
 "UIDie": ""
 }
 

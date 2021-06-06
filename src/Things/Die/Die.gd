@@ -77,7 +77,16 @@ func throw(rand: bool = true, velocity: Vector2 = Vector2.ZERO):
 	_border.mouse_default_cursor_shape = Control.CURSOR_ARROW
 
 	for i in range(RANDOM_DEFAULTS["num_rounds"]):
-		self.type = int(floor(rand_range(0, 3)))
+		var new_type: int = int(floor(rand_range(0, 6)))
+		if new_type == 0 or new_type == 1:
+			self.type = Enums.DieType.SWORD
+		elif new_type == 2:
+			self.type = Enums.DieType.HEALTH
+		elif new_type == 4 or new_type == 3:
+			self.type = Enums.DieType.SHIELD
+		else:
+			self.type = Enums.DieType.EMPTY
+
 		yield(get_tree().create_timer(RANDOM_DEFAULTS["start_time"] + RANDOM_DEFAULTS["time_increase"] * i), "timeout")
 
 	_is_throwing = false

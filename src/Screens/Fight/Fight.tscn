@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://Things/Die/Die.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Screens/Fight/Fight.gd" type="Script" id=2]
@@ -28,6 +28,8 @@
 [ext_resource path="res://Screens/Fight/impact.ogg" type="AudioStream" id=26]
 [ext_resource path="res://Screens/Fight/heal.ogg" type="AudioStream" id=27]
 [ext_resource path="res://Screens/Fight/click.ogg" type="AudioStream" id=28]
+[ext_resource path="res://Screens/Fight/hero_die.ogg" type="AudioStream" id=29]
+[ext_resource path="res://Things/Button/UIButton.tscn" type="PackedScene" id=30]
 
 [sub_resource type="DynamicFont" id=1]
 size = 34
@@ -61,79 +63,6 @@ anti_aliasing = false
 size = 34
 extra_spacing_space = -13
 font_data = ExtResource( 5 )
-
-[sub_resource type="DynamicFont" id=5]
-size = 58
-font_data = ExtResource( 5 )
-
-[sub_resource type="InputEventKey" id=6]
-scancode = 16777221
-
-[sub_resource type="ShortCut" id=7]
-shortcut = SubResource( 6 )
-
-[sub_resource type="Shader" id=8]
-code = "shader_type canvas_item;
-
-uniform float size_x = 0.008;
-uniform float size_y = 0.008;
-
-void fragment() {
-	vec2 uv = SCREEN_UV;
-	uv -= mod(uv, vec2(size_x, size_y));
-
-	COLOR.rgb = textureLod(SCREEN_TEXTURE, uv, 0.0).rgb;
-}"
-
-[sub_resource type="ShaderMaterial" id=9]
-shader = SubResource( 8 )
-shader_param/size_x = 0.003
-shader_param/size_y = 0.003
-
-[sub_resource type="Shader" id=10]
-code = "//---CRT Shader---
-shader_type canvas_item;
-
-uniform float scanline_count : hint_range(0, 1800) = 50.0;
-
-vec2 uv_curve(vec2 uv)
-{
-	uv = (uv - 0.5) * 2.0;
-	
-	//You can modify the numbers and try different values
-	uv.x *= 1.0 + pow(abs(uv.y) / 7.0, 2.0);
-	uv.y *= 1.0 + pow(abs(uv.x) / 7.0, 2.0);
-	
-	//The scale part (you can delete it when you want)
-	uv /= 1.0;
-	
-	uv = (uv/2.0) + 0.5;
-	return uv;
-}
-
-
-void fragment()
-{	
-	float PI = 3.14159;
-	
-	//You can modify the *3.0, *-3.0 for a bigger or smaller 
-	float r = texture(SCREEN_TEXTURE, uv_curve(SCREEN_UV) + vec2(SCREEN_PIXEL_SIZE.x*0.0), 0.0).r;
-	float g = texture(SCREEN_TEXTURE, uv_curve(SCREEN_UV) + vec2(SCREEN_PIXEL_SIZE.x*.5), 0.0).g;
-	float b = texture(SCREEN_TEXTURE, uv_curve(SCREEN_UV) + vec2(SCREEN_PIXEL_SIZE.x*-.5), 0.0).b;
-	
-	
-	//If you dont want scanlines you can just delete this part
-	float s = sin(uv_curve(SCREEN_UV).y * scanline_count * PI * 2.0);
-	s = (s * 0.5 + 0.5) * 0.9 + 0.1;
-	vec4 scan_line = vec4(vec3(pow(s, 0.1)), 1.0);
-	
-	
-	COLOR = vec4(r, g, b, 1.0) * scan_line;
-}"
-
-[sub_resource type="ShaderMaterial" id=11]
-shader = SubResource( 10 )
-shader_param/scanline_count = 90.0
 
 [sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 383.561, 10 )
@@ -178,6 +107,9 @@ audio_stream = ExtResource( 27 )
 
 [sub_resource type="AudioStreamRandomPitch" id=24]
 audio_stream = ExtResource( 28 )
+
+[sub_resource type="AudioStreamRandomPitch" id=25]
+audio_stream = ExtResource( 29 )
 
 [node name="Fight" type="Node2D"]
 script = ExtResource( 2 )
@@ -270,26 +202,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RollButton" type="Button" parent="CanvasLayer/UI/HBoxContainer/VBoxContainer"]
-margin_top = 73.0
-margin_right = 247.0
-margin_bottom = 152.0
-mouse_default_cursor_shape = 2
-custom_styles/hover = SubResource( 2 )
-custom_styles/pressed = SubResource( 3 )
-custom_styles/disabled = ExtResource( 8 )
-custom_styles/normal = ExtResource( 6 )
-custom_fonts/font = SubResource( 5 )
-custom_colors/font_color_disabled = Color( 0.0313726, 0.0941176, 0.12549, 1 )
-custom_colors/font_color = Color( 0.878431, 0.972549, 0.815686, 1 )
-custom_colors/font_color_hover = Color( 0.878431, 0.972549, 0.815686, 1 )
-custom_colors/font_color_pressed = Color( 0.878431, 0.972549, 0.815686, 1 )
-shortcut_in_tooltip = false
-shortcut = SubResource( 7 )
-text = "ROLL"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="RollButton" parent="CanvasLayer/UI/HBoxContainer/VBoxContainer" instance=ExtResource( 30 )]
 
 [node name="Modals" type="Control" parent="CanvasLayer"]
 anchor_right = 1.0
@@ -303,6 +216,9 @@ __meta__ = {
 
 [node name="WinModal" parent="CanvasLayer/Modals" instance=ExtResource( 16 )]
 title = "Success!"
+
+[node name="LoseModal" parent="CanvasLayer/Modals" instance=ExtResource( 16 )]
+title = "you died"
 
 [node name="RollTutorial" parent="CanvasLayer/Modals" instance=ExtResource( 16 )]
 title = "Rolling dice"
@@ -343,51 +259,6 @@ title = "Calculations #2"
 text = "Of course the monster will attack back:
 
 Damage from monster = monster's attack - # shield dice."
-
-[node name="Shaders" type="Control" parent="CanvasLayer"]
-visible = false
-margin_right = 40.0
-margin_bottom = 40.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="BackBufferCopy2" type="BackBufferCopy" parent="CanvasLayer/Shaders"]
-position = Vector2( 175.363, 537.401 )
-scale = Vector2( 2.75363, 6.37401 )
-copy_mode = 2
-rect = Rect2( 0, 0, 200, 200 )
-
-[node name="PixelShader" type="ColorRect" parent="CanvasLayer/Shaders/BackBufferCopy2"]
-material = SubResource( 9 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -69.0
-margin_top = -87.0
-margin_right = 4.0
-margin_bottom = -81.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="BackBufferCopy" type="BackBufferCopy" parent="CanvasLayer/Shaders"]
-position = Vector2( 4.2428, 1.41425 )
-scale = Vector2( 3.54558, 6.38815 )
-copy_mode = 2
-rect = Rect2( 0, 0, 200, 200 )
-
-[node name="VCRShader" type="ColorRect" parent="CanvasLayer/Shaders/BackBufferCopy"]
-material = SubResource( 11 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -9.0
-margin_right = 8.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="DiceTray" type="Node2D" parent="."]
 position = Vector2( -0.436523, 75 )
@@ -484,6 +355,7 @@ texture = ExtResource( 14 )
 
 [node name="PickupAudio" type="AudioStreamPlayer" parent="Audio"]
 stream = SubResource( 14 )
+volume_db = 1.0
 bus = "Sound"
 
 [node name="SwordAudio" type="AudioStreamPlayer" parent="Audio"]
@@ -529,6 +401,9 @@ bus = "Sound"
 
 [node name="ClickAudio" type="AudioStreamPlayer" parent="Audio"]
 stream = SubResource( 24 )
+
+[node name="HeroDieAudio" type="AudioStreamPlayer" parent="Audio"]
+stream = SubResource( 25 )
 
 [connection signal="pressed" from="CanvasLayer/UI/HBoxContainer/VBoxContainer/EndTurnButton" to="." method="_on_EndTurnButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/UI/HBoxContainer/VBoxContainer/RollButton" to="." method="_on_RollButton_pressed"]

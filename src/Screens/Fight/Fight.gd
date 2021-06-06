@@ -1,6 +1,8 @@
 extends Node2D
+class_name Fight
 
 signal monster_died
+signal hero_died
 
 var UIDieClass = preload("res://Things/UIDie/UIDie.tscn")
 var DieClass = preload("res://Things/Die/Die.tscn")
@@ -10,8 +12,8 @@ const MAX_DICE_SAVED: int = 4
 const HERO_MAX_HEALTH: int = 10
 
 export(Resource) var enemy_definition = enemy_definition as EnemyDefinition
+export(bool) var is_tutorial = false
 
-onready var _shaders: Control = $CanvasLayer/Shaders
 onready var _dice: Node2D = $DiceTray/Dice
 onready var _dice_tray: DiceTray = $DiceTray
 onready var _saved_diece: Control = $CanvasLayer/UI/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer/SavedDice
@@ -32,6 +34,7 @@ onready var _hero_block_effect: Effect = $Effects/HeroBlockEffect
 
 onready var _intro_modal: Modal = $CanvasLayer/Modals/IntroModal
 onready var _win_modal: Modal = $CanvasLayer/Modals/WinModal
+onready var _lose_modal: Modal = $CanvasLayer/Modals/LoseModal
 onready var _roll_tutorial_var: Modal = $CanvasLayer/Modals/RollTutorial
 onready var _end_turn_tutorial: Modal = $CanvasLayer/Modals/EndTurnModal
 onready var _click_dice_tutorial: Modal = $CanvasLayer/Modals/ClickOnDiceModal
@@ -49,6 +52,7 @@ onready var _monster_pain_audio: AudioStreamPlayer = $Audio/MonsterPain
 onready var _impact_audio: AudioStreamPlayer = $Audio/ImpactAudio
 onready var _heal_audio: AudioStreamPlayer = $Audio/HealAudio
 onready var _click_audio: AudioStreamPlayer = $Audio/ClickAudio
+onready var _hero_die_audio: AudioStreamPlayer = $Audio/HeroDieAudio
 
 var _hero_health: int = HERO_MAX_HEALTH
 
@@ -56,6 +60,7 @@ var _monster_health: int = 10
 
 var _throw_number: int = 0
 var _is_end_turn: bool = false
+var _add_extra_die: bool = false
 
 func _ready() -> void:
 	randomize()
@@ -66,13 +71,19 @@ func _ready() -> void:
 	_enemy.load_enemy(enemy_definition)
 
 	update_throws_label()
-	_shaders.visible = true
+
+	if _add_extra_die:
+		var new_die: Die = DieClass.instance()
+		_dice_tray.add_die(new_die)
+		new_die.throw(false)
+		new_die.connect("clicked", self, "save_die")
 
 	connect_dice()
 
 	_intro_modal.title = enemy_definition.name
 	_intro_modal.text = enemy_definition.flavor_text
 	_win_modal.text = enemy_definition.win_text
+	_lose_modal.text = enemy_definition.lose_text
 	yield(_intro_modal.popup(), "completed")
 
 	_start_timer.start()
@@ -91,7 +102,7 @@ func throw_all_dice():
 	yield(_dice.get_child(0), "throw_done")
 	_end_turn_button.disabled = false
 
-	if Globals.is_tutorial and is_instance_valid(_roll_tutorial_var):
+	if is_tutorial and is_instance_valid(_roll_tutorial_var):
 		yield(_roll_tutorial_var.popup(), "completed")
 		yield(_click_dice_tutorial.popup(), "completed")
 
@@ -114,7 +125,7 @@ func save_die(die: Die):
 
 	_pickup_audio.play()
 
-	if Globals.is_tutorial and is_instance_valid(_unsave_dice_tutorial):
+	if is_tutorial and is_instance_valid(_unsave_dice_tutorial):
 		yield(_unsave_dice_tutorial.popup(), "completed")
 
 
@@ -133,7 +144,7 @@ func _on_RollButton_pressed() -> void:
 
 	yield(throw_all_dice(), "completed")
 
-	if Globals.is_tutorial and is_instance_valid(_end_turn_tutorial):
+	if is_tutorial and is_instance_valid(_end_turn_tutorial):
 		yield(_end_turn_tutorial.popup(), "completed")
 
 
@@ -142,7 +153,7 @@ func update_throws_label():
 
 
 func get_outcome() -> Array:
-	var outcome: Array = [0, 0, 0]
+	var outcome: Array = [0, 0, 0, 0]
 
 	for die in _dice.get_children():
 		outcome[die.type] += 1
@@ -159,7 +170,7 @@ func _on_EndTurnButton_pressed() -> void:
 	_roll_button.disabled = true
 	_end_turn_button.disabled = true
 
-	if Globals.is_tutorial and is_instance_valid(_outcome_tutorial):
+	if is_tutorial and is_instance_valid(_outcome_tutorial):
 		yield(_outcome_tutorial.popup(), "completed")
 		yield(_damage_tutorial.popup(), "completed")
 
@@ -170,30 +181,32 @@ func _on_EndTurnButton_pressed() -> void:
 
 	### ATTACK MONSTER
 	var hero_attack: int = outcome[0] - enemy_definition.defence
-	_sword_audio.play()
 
-	if hero_attack > 0:
-		_enemy.play_damage_animation()
-		_monster_health = clamp(_monster_health - hero_attack, 0, enemy_definition.health)
-		_stats_ui.change_monster_health(_monster_health)
+	if outcome[0]:
+		_sword_audio.play()
 
-		_sword_effect.play(-hero_attack)
-		_monster_pain_audio.play()
-		_impact_audio.play()
+		if hero_attack:
+			_enemy.play_damage_animation()
+			_monster_health = clamp(_monster_health - hero_attack, 0, enemy_definition.health)
+			_stats_ui.change_monster_health(_monster_health)
 
-		if _monster_health <= 0:
-			_enemy.play_die_animation()
-			_end_timer.start()
-			yield(_end_timer, "timeout")
-			yield(_win_modal.popup(), "completed")
-			emit_signal("monster_died")
-			return
-	else:
-		_monster_block_effect.play(0)
-		_shield_audio.play()
+			_sword_effect.play(-hero_attack)
+			_monster_pain_audio.play()
+			_impact_audio.play()
 
-	_phase_timer.start()
-	yield(_phase_timer, "timeout")
+			if _monster_health <= 0:
+				_enemy.play_die_animation()
+				_end_timer.start()
+				yield(_end_timer, "timeout")
+				yield(_win_modal.popup(), "completed")
+				emit_signal("monster_died")
+				return
+		else:
+			_monster_block_effect.play(0)
+			_shield_audio.play()
+
+		_phase_timer.start()
+		yield(_phase_timer, "timeout")
 
 	### HEAL HERO
 	if outcome[1] > 0:
@@ -204,7 +217,7 @@ func _on_EndTurnButton_pressed() -> void:
 		_phase_timer.start()
 		yield(_phase_timer, "timeout")
 
-	if Globals.is_tutorial and is_instance_valid(_monster_tutorial):
+	if is_tutorial and is_instance_valid(_monster_tutorial):
 		yield(_monster_tutorial.popup(), "completed")
 
 	### ATTACK HERO
@@ -217,6 +230,12 @@ func _on_EndTurnButton_pressed() -> void:
 		_slash_effect.play(-monster_attack)
 		_hero_pain_audio.play(.5)
 		_impact_audio.play()
+
+		if _hero_health <= 0:
+			_hero_die_audio.play()
+			yield(_lose_modal.popup(), "completed")
+			emit_signal("hero_died")
+			return
 	else:
 		_hero_block_effect.play(0)
 		_shield_audio.play()

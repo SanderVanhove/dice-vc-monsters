@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Things/Enemy/EnemyDefinition.gd" type="Script" id=1]
+[ext_resource path="res://Things/Enemy/derpy_dragon.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = "Derpy Dragon"
+health = 20
+defence = 1
+attack = 4
+sprite = ExtResource( 2 )
+flavor_text = "It gets warmer as you approach the Derpy Dragon's den.
+
+This is it, the final battle!"
+win_text = "You can't believe it, you killed the dragon. Now that prince(s) must have eyes for you!
+
+You are a true hero!"
+lose_text = "In a moment of confusion the derpy dragon manages to swoop you up using one of his massive paws and swings you right into his mouth.
+
+You are dragon dinner :("

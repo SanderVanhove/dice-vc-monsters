@@ -1,0 +1,228 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Screens/Fight/RubikMonoOne-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Screens/LevelSelect/monster_circle.png" type="Texture" id=2]
+[ext_resource path="res://Screens/LevelSelect/connection.png" type="Texture" id=3]
+[ext_resource path="res://Things/Button/UIButton.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Screens/LevelSelect/LevelSelect.gd" type="Script" id=5]
+[ext_resource path="res://Screens/LevelSelect/derpy_dragon.png" type="Texture" id=6]
+[ext_resource path="res://Screens/Fight/click.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Screens/LevelSelect/skully_boy.png" type="Texture" id=8]
+[ext_resource path="res://Screens/LevelSelect/flappy_bar.png" type="Texture" id=9]
+
+[sub_resource type="DynamicFont" id=15]
+size = 44
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=12]
+size = 41
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 137
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=14]
+size = 37
+font_data = ExtResource( 1 )
+
+[node name="LevelSelect" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+num_defeated_enemies = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 53.0
+margin_top = 120.0
+margin_right = 666.0
+margin_bottom = 1159.0
+custom_constants/separation = 12
+
+[node name="MarginContainer3" type="MarginContainer" parent="CenterContainer/VBoxContainer"]
+margin_right = 613.0
+margin_bottom = 87.0
+custom_constants/margin_bottom = 31
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/MarginContainer3"]
+margin_right = 613.0
+margin_bottom = 56.0
+custom_fonts/font = SubResource( 15 )
+custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
+text = "Adventure track:"
+align = 1
+
+[node name="FlappyBat" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+margin_top = 99.0
+margin_right = 613.0
+margin_bottom = 301.0
+custom_constants/separation = 33
+
+[node name="CenterContainer" type="CenterContainer" parent="CenterContainer/VBoxContainer/FlappyBat"]
+margin_right = 202.0
+margin_bottom = 202.0
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer/FlappyBat/CenterContainer"]
+margin_right = 202.0
+margin_bottom = 202.0
+texture = ExtResource( 2 )
+
+[node name="Portrait" type="TextureRect" parent="CenterContainer/VBoxContainer/FlappyBat/CenterContainer"]
+margin_left = 34.0
+margin_top = 56.0
+margin_right = 167.0
+margin_bottom = 146.0
+texture = ExtResource( 9 )
+
+[node name="CenterContainer2" type="CenterContainer" parent="CenterContainer/VBoxContainer/FlappyBat"]
+margin_left = 235.0
+margin_right = 613.0
+margin_bottom = 202.0
+
+[node name="FlappyButton" parent="CenterContainer/VBoxContainer/FlappyBat/CenterContainer2" instance=ExtResource( 4 )]
+margin_top = 72.0
+margin_right = 378.0
+margin_bottom = 130.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 12 )
+text = "flappy bat"
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/VBoxContainer"]
+margin_top = 313.0
+margin_right = 613.0
+margin_bottom = 456.0
+custom_constants/margin_left = 95
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer/MarginContainer"]
+margin_left = 95.0
+margin_right = 613.0
+margin_bottom = 143.0
+texture = ExtResource( 3 )
+
+[node name="SkullyBoy" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+margin_top = 468.0
+margin_right = 613.0
+margin_bottom = 670.0
+custom_constants/separation = 33
+
+[node name="CenterContainer" type="CenterContainer" parent="CenterContainer/VBoxContainer/SkullyBoy"]
+margin_right = 202.0
+margin_bottom = 202.0
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer/SkullyBoy/CenterContainer"]
+margin_right = 202.0
+margin_bottom = 202.0
+texture = ExtResource( 2 )
+
+[node name="Portrait" type="TextureRect" parent="CenterContainer/VBoxContainer/SkullyBoy/CenterContainer"]
+visible = false
+margin_left = 5.0
+margin_top = 1.0
+margin_right = 197.0
+margin_bottom = 201.0
+texture = ExtResource( 8 )
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/SkullyBoy/CenterContainer"]
+margin_left = 43.0
+margin_top = 16.0
+margin_right = 159.0
+margin_bottom = 186.0
+custom_fonts/font = SubResource( 13 )
+custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
+text = "?"
+
+[node name="CenterContainer2" type="CenterContainer" parent="CenterContainer/VBoxContainer/SkullyBoy"]
+margin_left = 235.0
+margin_right = 235.0
+margin_bottom = 202.0
+
+[node name="SkullyButton" parent="CenterContainer/VBoxContainer/SkullyBoy/CenterContainer2" instance=ExtResource( 4 )]
+visible = false
+margin_left = -189.0
+margin_top = 72.0
+margin_right = 189.0
+margin_bottom = 130.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 12 )
+disabled = true
+text = "skully boy"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/VBoxContainer"]
+margin_top = 682.0
+margin_right = 613.0
+margin_bottom = 825.0
+custom_constants/margin_left = 95
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer/MarginContainer2"]
+margin_left = 95.0
+margin_right = 613.0
+margin_bottom = 143.0
+texture = ExtResource( 3 )
+
+[node name="DerpyDragon" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+margin_top = 837.0
+margin_right = 613.0
+margin_bottom = 1039.0
+custom_constants/separation = 33
+
+[node name="CenterContainer" type="CenterContainer" parent="CenterContainer/VBoxContainer/DerpyDragon"]
+margin_right = 202.0
+margin_bottom = 202.0
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer/DerpyDragon/CenterContainer"]
+margin_right = 202.0
+margin_bottom = 202.0
+texture = ExtResource( 2 )
+
+[node name="Portrait" type="TextureRect" parent="CenterContainer/VBoxContainer/DerpyDragon/CenterContainer"]
+visible = false
+margin_left = 5.0
+margin_top = 1.0
+margin_right = 197.0
+margin_bottom = 201.0
+texture = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/DerpyDragon/CenterContainer"]
+margin_left = 43.0
+margin_top = 16.0
+margin_right = 159.0
+margin_bottom = 186.0
+custom_fonts/font = SubResource( 13 )
+custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
+text = "?"
+
+[node name="CenterContainer2" type="CenterContainer" parent="CenterContainer/VBoxContainer/DerpyDragon"]
+margin_left = 235.0
+margin_right = 235.0
+margin_bottom = 202.0
+
+[node name="DerpyButton" parent="CenterContainer/VBoxContainer/DerpyDragon/CenterContainer2" instance=ExtResource( 4 )]
+visible = false
+margin_left = -200.0
+margin_top = 74.0
+margin_right = 200.0
+margin_bottom = 127.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 14 )
+disabled = true
+text = "derpy dragon"
+
+[node name="ClickAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/FlappyBat/CenterContainer2/FlappyButton" to="." method="_on_FlappyButton_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/SkullyBoy/CenterContainer2/SkullyButton" to="." method="_on_SkullyButton_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/DerpyDragon/CenterContainer2/DerpyButton" to="." method="_on_DerpyButton_pressed"]

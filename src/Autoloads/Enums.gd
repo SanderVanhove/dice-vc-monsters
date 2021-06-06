@@ -1,4 +1,4 @@
 extends Node
 
 
-enum DieType {SWORD, HEALTH, SHIELD}
+enum DieType {SWORD, HEALTH, SHIELD, EMPTY}

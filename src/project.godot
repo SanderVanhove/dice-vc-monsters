@@ -34,10 +34,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Things/Enemy/EnemyDefinition.gd"
 }, {
+"base": "Node2D",
+"class": "Fight",
+"language": "GDScript",
+"path": "res://Screens/Fight/Fight.gd"
+}, {
 "base": "CenterContainer",
 "class": "HealthBar",
 "language": "GDScript",
 "path": "res://Things/HealthBar/HealthBar.gd"
+}, {
+"base": "Control",
+"class": "LevelSelect",
+"language": "GDScript",
+"path": "res://Screens/LevelSelect/LevelSelect.gd"
 }, {
 "base": "Control",
 "class": "Modal",
@@ -65,7 +75,9 @@ _global_script_class_icons={
 "Effect": "",
 "Enemy": "",
 "EnemyDefinition": "",
+"Fight": "",
 "HealthBar": "",
+"LevelSelect": "",
 "Modal": "",
 "RandomStreamPlayer": "",
 "StatsUI": "",
@@ -75,7 +87,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Dice vs Monsters"
-run/main_scene="res://Screens/Fight/Fight.tscn"
+run/main_scene="res://Screens/Main/Main.tscn"
 boot_splash/image="res://splash_screen.png"
 boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0.984314, 0.921569, 0.890196, 1 )
@@ -84,7 +96,6 @@ config/icon="res://icon.png"
 [autoload]
 
 Enums="*res://Autoloads/Enums.gd"
-Globals="*res://Autoloads/Globals.gd"
 
 [display]
 

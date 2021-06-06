@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Things/Enemy/flappy_bat.png" type="Texture" id=1]
+[ext_resource path="res://Things/Enemy/EnemyDefinition.gd" type="Script" id=2]
+
+[resource]
+script = ExtResource( 2 )
+name = "Flappy Bat"
+health = 8
+defence = 0
+attack = 2
+sprite = ExtResource( 1 )
+flavor_text = "As you set one foot into the darkness of the cold cave a swarm of bats flies towards the exit.
+One of them seems to be picking a fight with you, this must be Flappy Bat!"
+win_text = "With just a few swift strikes of your blade Flappy Bat falls to the grownd.
+
+You hope more challenging foes await!"
+lose_text = "How did you manage to f*ck this up? It is really imposibble to lose to Flappy Bat."

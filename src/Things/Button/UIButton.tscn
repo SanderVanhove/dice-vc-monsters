@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Screens/Fight/RubikMonoOne-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Screens/Fight/ButtonBackgroundDisabled.tres" type="StyleBox" id=2]
+[ext_resource path="res://Screens/Fight/ButtonBackground.tres" type="StyleBox" id=3]
+
+[sub_resource type="StyleBoxFlat" id=2]
+content_margin_left = 14.0
+content_margin_right = 14.0
+content_margin_top = 0.0
+content_margin_bottom = 3.0
+bg_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=3]
+content_margin_left = 14.0
+content_margin_right = 14.0
+content_margin_top = 8.0
+content_margin_bottom = 0.0
+bg_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="DynamicFont" id=5]
+size = 58
+font_data = ExtResource( 1 )
+
+[sub_resource type="InputEventKey" id=6]
+scancode = 16777221
+
+[sub_resource type="ShortCut" id=7]
+shortcut = SubResource( 6 )
+
+[node name="RollButton" type="Button"]
+margin_top = 73.0
+margin_right = 247.0
+margin_bottom = 152.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/disabled = ExtResource( 2 )
+custom_styles/normal = ExtResource( 3 )
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color_disabled = Color( 0.0313726, 0.0941176, 0.12549, 1 )
+custom_colors/font_color = Color( 0.878431, 0.972549, 0.815686, 1 )
+custom_colors/font_color_hover = Color( 0.878431, 0.972549, 0.815686, 1 )
+custom_colors/font_color_pressed = Color( 0.878431, 0.972549, 0.815686, 1 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 7 )
+text = "ROLL"
+__meta__ = {
+"_edit_use_anchors_": false
+}

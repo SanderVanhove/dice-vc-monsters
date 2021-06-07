@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Nomen Est Omen_8. Planxty Burke.ogg-d46502be9cc435bceb5fe802c41d6915.oggstr"
+
+[deps]
+
+source_file="res://Screens/Fight/Nomen Est Omen_8. Planxty Burke.ogg"
+dest_files=[ "res://.import/Nomen Est Omen_8. Planxty Burke.ogg-d46502be9cc435bceb5fe802c41d6915.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

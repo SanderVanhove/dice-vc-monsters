@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://Things/Die/Die.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Screens/Fight/Fight.gd" type="Script" id=2]
@@ -33,6 +33,7 @@
 [ext_resource path="res://Screens/Fight/monster_die.ogg" type="AudioStream" id=31]
 [ext_resource path="res://Screens/Fight/win.ogg" type="AudioStream" id=32]
 [ext_resource path="res://Things/Modal/EndModal.tscn" type="PackedScene" id=33]
+[ext_resource path="res://Screens/Fight/Nomen Est Omen_8. Planxty Burke.ogg" type="AudioStream" id=34]
 
 [sub_resource type="DynamicFont" id=1]
 size = 34
@@ -422,6 +423,11 @@ bus = "Sound"
 [node name="MonsterDieAudio" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource( 31 )
 bus = "Sound"
+
+[node name="Music" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 34 )
+volume_db = -20.0
+autoplay = true
 
 [connection signal="pressed" from="CanvasLayer/UI/HBoxContainer/VBoxContainer/EndTurnButton" to="." method="_on_EndTurnButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/UI/HBoxContainer/VBoxContainer/RollButton" to="." method="_on_RollButton_pressed"]
